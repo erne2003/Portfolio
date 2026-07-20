@@ -1,0 +1,159 @@
+/* ═══════════════════════════════════════════════
+   Education Section
+   ═══════════════════════════════════════════════ */
+
+.education {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  background: var(--bg-primary);
+}
+
+.education__header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.education__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 700px;
+  width: 100%;
+}
+
+/* Education card */
+.education__card {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Left accent stripe */
+.education__card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  transition: all var(--transition-smooth);
+}
+
+.education__card--blue::before {
+  background: linear-gradient(to bottom, var(--accent-blue), transparent);
+}
+
+.education__card--teal::before {
+  background: linear-gradient(to bottom, var(--accent-teal), transparent);
+}
+
+.education__card--purple::before {
+  background: linear-gradient(to bottom, var(--accent-purple), transparent);
+}
+
+.education__card:hover::before {
+  width: 4px;
+}
+
+/* Icon area */
+.education__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+  transition: all var(--transition-smooth);
+}
+
+.education__icon--blue {
+  background: var(--accent-blue-dim);
+  color: var(--accent-blue);
+  border: 1px solid rgba(0, 168, 255, 0.2);
+}
+
+.education__icon--teal {
+  background: var(--accent-teal-dim);
+  color: var(--accent-teal);
+  border: 1px solid rgba(45, 212, 191, 0.2);
+}
+
+.education__icon--purple {
+  background: var(--accent-purple-dim);
+  color: var(--accent-purple);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.education__card:hover .education__icon {
+  transform: scale(1.08);
+}
+
+/* Content */
+.education__content {
+  flex: 1;
+}
+
+.education__degree {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.2rem;
+}
+
+.education__school {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--accent-teal);
+  margin-bottom: 0.4rem;
+}
+
+.education__date {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.7rem;
+}
+
+.education__desc {
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.education__courses {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.8rem;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .education {
+    padding: 4rem 1rem;
+  }
+
+  .education__card {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.2rem;
+  }
+
+  .education__icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+  }
+}

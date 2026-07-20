@@ -1,0 +1,141 @@
+/* ═══════════════════════════════════════════════
+   About Section
+   ═══════════════════════════════════════════════ */
+
+.about {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  background: var(--bg-primary);
+}
+
+.about__header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.about__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  max-width: 900px;
+  width: 100%;
+  align-items: start;
+}
+
+/* Bio column */
+.about__bio {
+  padding: 2rem;
+}
+
+.about__bio-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.about__bio-text {
+  font-size: 0.92rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.about__bio-text:last-of-type {
+  margin-bottom: 1.5rem;
+}
+
+.about__bio-highlight {
+  color: var(--accent-blue);
+  font-weight: 500;
+}
+
+.about__interests {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.about__interest-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 100px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  transition: all var(--transition-smooth);
+}
+
+.about__interest-tag:hover {
+  border-color: var(--accent-teal);
+  color: var(--accent-teal);
+}
+
+/* Stats column */
+.about__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.about__stat-card {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.about__stat-number {
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 0.4rem;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-teal));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.about__stat-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Accent card variant */
+.about__stat-card--accent {
+  border-color: rgba(0, 168, 255, 0.15);
+  background: linear-gradient(
+    135deg,
+    rgba(0, 168, 255, 0.06) 0%,
+    rgba(12, 12, 20, 0.65) 100%
+  );
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .about__grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .about__stats {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .about {
+    padding: 4rem 1rem;
+  }
+}

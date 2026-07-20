@@ -1,1 +1,148 @@
 @import "tailwindcss";
+
+/* ═══════════════════════════════════════════════
+   Design Tokens — Dark Fintech Palette
+   ═══════════════════════════════════════════════ */
+:root {
+  /* Backgrounds */
+  --bg-primary: #07070d;
+  --bg-elevated: #0c0c14;
+  --bg-card: #111119;
+  --bg-card-hover: #16161f;
+  --bg-surface: #1a1a26;
+
+  /* Borders */
+  --border-subtle: #1c1c2e;
+  --border-glow: #2a2a40;
+
+  /* Accent palette — vibrant cold tones */
+  --accent-blue: #00a8ff;
+  --accent-blue-dim: rgba(0, 168, 255, 0.15);
+  --accent-teal: #2dd4bf;
+  --accent-teal-dim: rgba(45, 212, 191, 0.12);
+  --accent-coral: #ff4757;
+  --accent-coral-dim: rgba(255, 71, 87, 0.12);
+  --accent-purple: #8b5cf6;
+  --accent-purple-dim: rgba(139, 92, 246, 0.12);
+  --accent-amber: #f59e0b;
+
+  /* Text */
+  --text-primary: #e8e8f0;
+  --text-secondary: #8b8ba0;
+  --text-muted: #55556a;
+
+  /* Misc */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --glass-blur: 16px;
+  --transition-smooth: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ═══════════════════════════════════════════════
+   Global Resets & Base
+   ═══════════════════════════════════════════════ */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* ═══════════════════════════════════════════════
+   Shared Utilities
+   ═══════════════════════════════════════════════ */
+
+/* Section title */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-blue);
+  padding: 0.35rem 1rem;
+  border: 1px solid var(--accent-blue-dim);
+  border-radius: 100px;
+  background: var(--accent-blue-dim);
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.section-subtitle {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 540px;
+}
+
+/* Glassmorphic card */
+.glass-card {
+  background: linear-gradient(
+    135deg,
+    rgba(17, 17, 25, 0.85) 0%,
+    rgba(12, 12, 20, 0.65) 100%
+  );
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition-smooth),
+              box-shadow var(--transition-smooth),
+              transform var(--transition-smooth);
+}
+
+.glass-card:hover {
+  border-color: var(--border-glow);
+  box-shadow: 0 0 30px rgba(0, 168, 255, 0.06),
+              0 8px 32px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Glow border variant */
+.glass-card--blue:hover {
+  border-color: rgba(0, 168, 255, 0.3);
+  box-shadow: 0 0 40px rgba(0, 168, 255, 0.08);
+}
+
+.glass-card--teal:hover {
+  border-color: rgba(45, 212, 191, 0.3);
+  box-shadow: 0 0 40px rgba(45, 212, 191, 0.08);
+}
+
+.glass-card--coral:hover {
+  border-color: rgba(255, 71, 87, 0.3);
+  box-shadow: 0 0 40px rgba(255, 71, 87, 0.08);
+}
+
+/* Chip / Tag */
+.tech-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  border-radius: 100px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  transition: all var(--transition-smooth);
+}
+
+.tech-chip:hover {
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+  background: var(--accent-blue-dim);
+}

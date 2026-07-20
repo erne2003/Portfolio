@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import DecryptedText from './DecryptedText';
 function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -16,7 +17,14 @@ function Navbar() {
             <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
                 {/* Logo / Name */}
                 <a href="#hero" className="text-xl font-bold tracking-tight text-teal-400 hover:text-teal-300 transition-colors">
-                    Ernesto.dev
+                    <DecryptedText
+                        text="Ernesto Cardoso"
+                        animateOn="view"
+                        speed={32}
+                        maxIterations={12}
+                        revealDirection="start"
+                        sequential
+                    />
                 </a>
 
                 {/* Desktop Navigation Links */}

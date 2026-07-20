@@ -1,0 +1,161 @@
+/* ═══════════════════════════════════════════════
+   Experience Section
+   ═══════════════════════════════════════════════ */
+
+.experience {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  background: var(--bg-primary);
+}
+
+.experience__header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+/* Timeline */
+.experience__timeline {
+  position: relative;
+  max-width: 700px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Vertical line */
+.experience__timeline::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--border-glow) 10%,
+    var(--border-glow) 90%,
+    transparent
+  );
+}
+
+/* Individual entry */
+.experience__entry {
+  position: relative;
+  padding-left: 56px;
+}
+
+/* Timeline dot */
+.experience__dot {
+  position: absolute;
+  left: 13px;
+  top: 24px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--bg-primary);
+  border: 2px solid var(--accent-blue);
+  z-index: 2;
+  transition: all var(--transition-smooth);
+  box-shadow: 0 0 12px var(--accent-blue-dim);
+}
+
+.experience__entry:hover .experience__dot {
+  background: var(--accent-blue);
+  box-shadow: 0 0 20px rgba(0, 168, 255, 0.4);
+  transform: scale(1.2);
+}
+
+/* Card */
+.experience__card {
+  padding: 1.5rem;
+}
+
+.experience__date {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent-blue);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.experience__role {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.2rem;
+}
+
+.experience__company {
+  font-size: 0.9rem;
+  color: var(--accent-teal);
+  font-weight: 500;
+  margin-bottom: 0.8rem;
+}
+
+.experience__details {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.experience__details li {
+  position: relative;
+  padding-left: 1rem;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.experience__details li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent-blue);
+  font-size: 0.75rem;
+}
+
+.experience__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .experience {
+    padding: 4rem 1rem;
+  }
+
+  .experience__timeline::before {
+    left: 14px;
+  }
+
+  .experience__dot {
+    left: 7px;
+    width: 13px;
+    height: 13px;
+  }
+
+  .experience__entry {
+    padding-left: 44px;
+  }
+
+  .experience__card {
+    padding: 1.2rem;
+  }
+}
