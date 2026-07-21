@@ -62,24 +62,28 @@ function App() {
           </SectionWrapper>
 
           <SectionWrapper>
+            <Projects id="projects" />
+          </SectionWrapper>
+
+          <SectionWrapper>
             <Experience id="experience" />
           </SectionWrapper>
+
+        <SectionWrapper>
+            <Education id="education" />
+          </SectionWrapper>
+
 
           <SectionWrapper>
             <About id="about" />
           </SectionWrapper>
 
-          <SectionWrapper>
-            <Projects id="projects" />
-          </SectionWrapper>
-
-          <SectionWrapper>
-            <Education id="education" />
-          </SectionWrapper>
+  
 
           <SectionWrapper>
             <TechStack id="techstack" />
           </SectionWrapper>
+
         </main>
 
         {/* 3. The Interactive Progress Indicator Bar matching your sample specs */}
