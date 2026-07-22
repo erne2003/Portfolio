@@ -7,7 +7,7 @@ import Experience from './Sections/Experience.jsx';
 import About from './Sections/About.jsx';
 import Projects from './Sections/Projects.jsx';
 import Education from './Sections/Education.jsx';
-import TechStack from './Sections/TechStacks.jsx';
+import TechStack from './Sections/Techstacks.jsx';
 
 
 // Individual section tracker for precise entrance and exit transitions
