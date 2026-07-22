@@ -1,4 +1,4 @@
-import './Techstacks.css';
+import './TechStacks.css';
 
 const categories = [
     {
@@ -42,7 +42,7 @@ const categories = [
     },
 ];
 
-function TechStack({ id }) {
+function TechStacks({ id }) {
     return (
         <section id={id} className="techstack">
             <div className="techstack__header">
@@ -85,4 +85,4 @@ function TechStack({ id }) {
     );
 }
 
-export default TechStack;
+export default TechStacks;
