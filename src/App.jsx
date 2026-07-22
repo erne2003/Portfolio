@@ -9,6 +9,7 @@ import Projects from './Sections/Projects.jsx';
 import Education from './Sections/Education.jsx';
 import TechStack from './Sections/TechStack.jsx';
 
+
 // Individual section tracker for precise entrance and exit transitions
 const SectionWrapper = ({ children, className = '' }) => {
   const containerRef = useRef(null);
