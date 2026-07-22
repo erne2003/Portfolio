@@ -7,7 +7,7 @@ import Experience from './Sections/Experience.jsx';
 import About from './Sections/About.jsx';
 import Projects from './Sections/Projects.jsx';
 import Education from './Sections/Education.jsx';
-import TechStacks from './Sections/TechStacks.jsx';
+import TechStack from './Sections/TechStack.jsx';
 
 // Individual section tracker for precise entrance and exit transitions
 const SectionWrapper = ({ children, className = '' }) => {
@@ -78,7 +78,7 @@ function App() {
           </SectionWrapper>
 
           <SectionWrapper className="section-wrapper--techstack">
-            <TechStacks id="techstack" />
+            <TechStack id="techstack" />
           </SectionWrapper>
 
         </main>
