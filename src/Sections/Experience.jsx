@@ -79,7 +79,7 @@ function Experience({ id }) {
 
                 {/* Past Experience Column */}
                 <div className="experience__section">
-                    <div className="experience__header">
+                    <div className="experience__header experience__header--shifted">
                         <span className="section-label">Career</span>
                         <h2 className="section-title">Past Experience</h2>
                     </div>

@@ -1,16 +1,16 @@
 import './About.css';
 
 const stats = [
-    { number: '3+', label: 'Years Experience' },
-    { number: '15+', label: 'Projects Built' },
-    { number: '8+', label: 'Technologies' },
+    { number: '1', label: 'Year of Experience' },
+    { number: '12+', label: 'Projects' },
+    { number: '18+', label: 'Technologies' },
     { number: '100%', label: 'Passion' },
 ];
 
 const interests = [
     '💹 Fintech',
     '☁️ Cloud Architecture',
-    '📊 Data Visualization',
+    '🏋️‍♂️Fitness & Recovery',
     '🔐 Security',
     '⚡ Performance',
     '🎨 UI/UX Design',
@@ -33,15 +33,15 @@ function About({ id }) {
                     <p className="about__bio-text">
                         I'm a software engineer with a passion for building products that
                         sit at the <span className="about__bio-highlight">intersection of
-                        finance and technology</span>. I thrive in environments where clean
+                            finance and technology</span>. I thrive in environments where clean
                         code meets real-world impact.
                     </p>
                     <p className="about__bio-text">
                         From architecting scalable APIs to designing pixel-perfect
                         interfaces, I enjoy the full spectrum of product development.
                         Currently exploring <span className="about__bio-highlight">cloud-native
-                        architectures</span> and <span className="about__bio-highlight">real-time
-                        data systems</span>.
+                            architectures</span> and <span className="about__bio-highlight">real-time
+                                data systems</span>.
                     </p>
 
                     <div className="about__interests">

@@ -56,6 +56,67 @@ body {
    Shared Utilities
    ═══════════════════════════════════════════════ */
 
+/* Prevent text-selection cursor on interactive content areas */
+.glass-card,
+.section-label,
+.section-title,
+.section-subtitle,
+.tech-chip,
+.hero,
+.experience,
+.about,
+.projects,
+.education,
+.techstack {
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ═══════════════════════════════════════════════
+   Navbar Menu Options (Uiverse.io animation)
+   ═══════════════════════════════════════════════ */
+.nav-link {
+  font-size: 15px;
+  color: var(--text-secondary, #94a3b8);
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  border: none;
+  background: none;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-block;
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-duration: 400ms;
+  transition-property: color;
+}
+
+.nav-link:focus,
+.nav-link:hover {
+  color: var(--accent-teal, #2dd4bf);
+}
+
+.nav-link:focus::after,
+.nav-link:hover::after {
+  width: 100%;
+  left: 0%;
+}
+
+.nav-link::after {
+  content: "";
+  pointer-events: none;
+  bottom: -4px;
+  left: 50%;
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background-color: var(--accent-teal, #2dd4bf);
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-duration: 400ms;
+  transition-property: width, left;
+}
 /* Section title */
 .section-label {
   display: inline-flex;
@@ -74,7 +135,7 @@ body {
 }
 
 .section-title {
-  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-size: clamp(1.5rem, 3.8vw, 2.5rem);
   font-weight: 700;
   color: var(--text-primary);
   line-height: 1.15;

@@ -30,6 +30,7 @@ function DecryptedText({
   animateOn = 'hover',
   revealDirection = 'start',
   sequential = false,
+  revealChunkSize = 1,
   useOriginalCharsOnly = false,
   onAnimationComplete,
 }) {
@@ -100,10 +101,10 @@ function DecryptedText({
             continue;
           }
 
-          // In sequential mode, only animate up to the current reveal index
+          // In sequential mode, only animate up to the current reveal chunk
           if (sequential) {
             const orderIdx = revealOrder.indexOf(i);
-            if (orderIdx > currentRevealIdx) {
+            if (orderIdx >= currentRevealIdx + revealChunkSize) {
               next[i] = randomChar();
               allDone = false;
               continue;
@@ -120,10 +121,17 @@ function DecryptedText({
         }
 
         if (sequential) {
-          // Check if the current target is done, then move to the next
-          const targetIdx = revealOrder[currentRevealIdx];
-          if (targetIdx !== undefined && iterationCount.current[targetIdx] >= maxIterations) {
-            currentRevealIdx++;
+          // Check if all items in the current chunk are done
+          let chunkDone = true;
+          for (let c = 0; c < revealChunkSize; c++) {
+            const targetIdx = revealOrder[currentRevealIdx + c];
+            if (targetIdx !== undefined && iterationCount.current[targetIdx] < maxIterations) {
+              chunkDone = false;
+              break;
+            }
+          }
+          if (chunkDone) {
+            currentRevealIdx += revealChunkSize;
           }
         }
 
@@ -146,6 +154,7 @@ function DecryptedText({
     speed,
     maxIterations,
     sequential,
+    revealChunkSize,
     getRevealOrder,
     randomChar,
     onAnimationComplete,

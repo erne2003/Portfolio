@@ -41,6 +41,10 @@
   margin-bottom: 2rem;
 }
 
+.experience__header--shifted {
+  padding-left: 56px;
+}
+
 .experience__grid {
   display: flex;
   flex-direction: column;

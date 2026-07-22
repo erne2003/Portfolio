@@ -18,12 +18,32 @@
   margin-bottom: 3.5rem;
 }
 
-.education__list {
+.education__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 6rem;
+  row-gap: 2rem;
+  max-width: 1100px;
+  width: 100%;
+}
+
+.education__column {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  max-width: 700px;
-  width: 100%;
+}
+
+.education__column-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding-left: 0.25rem;
 }
 
 /* Education card */
@@ -61,6 +81,14 @@
 
 .education__card:hover::before {
   width: 4px;
+}
+
+/* Icon container for vertical stacking */
+.education__icons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex-shrink: 0;
 }
 
 /* Icon area */
@@ -140,6 +168,12 @@
 }
 
 /* Responsive */
+@media (max-width: 768px) {
+  .education__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 640px) {
   .education {
     padding: 4rem 1rem;

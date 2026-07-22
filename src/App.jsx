@@ -9,8 +9,9 @@ import Projects from './Sections/Projects.jsx';
 import Education from './Sections/Education.jsx';
 import TechStack from './Sections/TechStacks.jsx';
 
+
 // Individual section tracker for precise entrance and exit transitions
-const SectionWrapper = ({ children }) => {
+const SectionWrapper = ({ children, className = '' }) => {
   const containerRef = useRef(null);
 
   // Track this specific section's intersection with the viewport
@@ -29,7 +30,7 @@ const SectionWrapper = ({ children }) => {
   const filter = useTransform(blurValue, (v) => `blur(${v}px)`);
 
   return (
-    <div ref={containerRef}>
+    <div ref={containerRef} className={`section-wrapper ${className}`}>
       <motion.div
         style={{ opacity, scale, y, filter }}
         className="w-full z-10"
@@ -57,30 +58,27 @@ function App() {
         <Navbar />
 
         <main className="relative z-10">
-          <SectionWrapper>
+          <SectionWrapper className="section-wrapper--hero">
             <Hero id="hero" />
           </SectionWrapper>
 
-          <SectionWrapper>
+          <SectionWrapper className="section-wrapper--projects">
             <Projects id="projects" />
           </SectionWrapper>
 
-          <SectionWrapper>
+          <SectionWrapper className="section-wrapper--experience">
             <Experience id="experience" />
           </SectionWrapper>
 
-        <SectionWrapper>
+          <SectionWrapper className="section-wrapper--education">
             <Education id="education" />
           </SectionWrapper>
 
-
-          <SectionWrapper>
+          <SectionWrapper className="section-wrapper--about">
             <About id="about" />
           </SectionWrapper>
 
-  
-
-          <SectionWrapper>
+          <SectionWrapper className="section-wrapper--techstack">
             <TechStack id="techstack" />
           </SectionWrapper>
 
@@ -89,7 +87,7 @@ function App() {
         {/* 3. The Interactive Progress Indicator Bar matching your sample specs */}
         <motion.div
           style={{ scaleX }}
-          className="fixed left-0 right-0 h-[5px] bg-teal-500 bottom-[50px] origin-left z-50 mix-blend-screen"
+          className="fixed left-0 right-0 h-[5px] bg-teal-500 bottom-[15px] origin-left z-50 mix-blend-screen"
         />
       </div>
     </ReactLenis>
