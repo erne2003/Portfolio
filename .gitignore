@@ -26,3 +26,5 @@ dist-ssr
 #cache
 .vite
 .cache
+.vercel
+.env*
