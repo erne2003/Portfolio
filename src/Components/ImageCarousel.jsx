@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import './ImageCarousel.css';
 
 /*
@@ -13,6 +13,8 @@ import './ImageCarousel.css';
 function ImageCarousel({ images = [], label = 'Project' }) {
     // ① State: which image index is currently shown
     const [currentIndex, setCurrentIndex] = useState(0);
+    // Where the current touch started, for swipe detection
+    const touchStart = useRef(null);
 
     // If there are no images, don't render anything
     if (images.length === 0) return null;
@@ -40,8 +42,37 @@ function ImageCarousel({ images = [], label = 'Project' }) {
         setCurrentIndex(index);
     };
 
+    // Swipe left/right to change slide. Mostly-vertical gestures are ignored so
+    // the page can still scroll when the finger starts on the carousel.
+    const onTouchStart = (e) => {
+        const t = e.touches[0];
+        touchStart.current = { x: t.clientX, y: t.clientY };
+    };
+
+    const onTouchEnd = (e) => {
+        const start = touchStart.current;
+        touchStart.current = null;
+        if (!start || images.length < 2) return;
+        const t = e.changedTouches[0];
+        const dx = t.clientX - start.x;
+        const dy = t.clientY - start.y;
+        if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+        setCurrentIndex((prev) =>
+            dx < 0
+                ? (prev === images.length - 1 ? 0 : prev + 1)
+                : (prev === 0 ? images.length - 1 : prev - 1)
+        );
+    };
+
     return (
-        <div className="carousel" role="group" aria-roledescription="carousel" aria-label={`${label} screenshots`}>
+        <div
+            className="carousel"
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+            role="group"
+            aria-roledescription="carousel"
+            aria-label={`${label} screenshots`}
+        >
             {/* ④ The sliding track — shifts left by (currentIndex × 100)% */}
             <div
                 className="carousel__track"

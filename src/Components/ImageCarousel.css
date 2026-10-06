@@ -9,6 +9,8 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
+  /* Horizontal swipes belong to the carousel; vertical ones still scroll the page */
+  touch-action: pan-y;
 }
 
 .carousel__track {
@@ -47,8 +49,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border: 1px solid var(--border-strong);
   border-radius: 50%;
@@ -81,7 +83,7 @@
 .carousel__btn--left { left: var(--space-2); }
 .carousel__btn--right { right: var(--space-2); }
 
-/* Dots: 24px hit area around a small visible dot */
+/* Dots: 28px hit area around a small visible dot */
 .carousel__dots {
   position: absolute;
   bottom: 0;
@@ -93,8 +95,8 @@
 
 .carousel__dot {
   position: relative;
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   padding: 0;
   border: 0;
   background: transparent;

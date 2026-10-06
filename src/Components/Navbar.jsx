@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './Navbar.css';
 import DecryptedText from './DecryptedText';
 import Folder from './Folder';
@@ -14,6 +14,8 @@ const navLinks = [
 
 // The folder menu fans its links out to the left, so it needs a wide viewport.
 const FOLDER_QUERY = '(min-width: 1280px)';
+// The drawer is replaced by inline links at this width (matches Navbar.css).
+const DESKTOP_QUERY = '(min-width: 1024px)';
 
 function useMediaQuery(query) {
     const [matches, setMatches] = useState(() => window.matchMedia(query).matches);
@@ -33,6 +35,9 @@ function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isFolderOpen, setIsFolderOpen] = useState(false);
     const canUseFolder = useMediaQuery(FOLDER_QUERY);
+    const isDesktop = useMediaQuery(DESKTOP_QUERY);
+    const headerRef = useRef(null);
+    const toggleRef = useRef(null);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -49,18 +54,41 @@ function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Close the mobile drawer with Escape
+    // While the drawer is open: Escape (focus returns to the toggle) or a tap
+    // outside the header closes it, and the page behind it can't scroll.
     useEffect(() => {
         if (!isOpen) return;
-        const onKey = (e) => e.key === 'Escape' && setIsOpen(false);
+        const onKey = (e) => {
+            if (e.key === 'Escape') {
+                setIsOpen(false);
+                toggleRef.current?.focus();
+            }
+        };
+        const onPointerDown = (e) => {
+            if (headerRef.current && !headerRef.current.contains(e.target)) setIsOpen(false);
+        };
+        const root = document.documentElement;
+        const prevOverflow = root.style.overflow;
+        root.style.overflow = 'hidden';
         window.addEventListener('keydown', onKey);
-        return () => window.removeEventListener('keydown', onKey);
+        document.addEventListener('pointerdown', onPointerDown);
+        return () => {
+            root.style.overflow = prevOverflow;
+            window.removeEventListener('keydown', onKey);
+            document.removeEventListener('pointerdown', onPointerDown);
+        };
     }, [isOpen]);
+
+    // Rotating or resizing up to desktop width hides the drawer, so reset it
+    useEffect(() => {
+        if (isDesktop) setIsOpen(false);
+    }, [isDesktop]);
 
     const collapsed = isScrolled && canUseFolder;
 
     return (
         <header
+            ref={headerRef}
             onMouseLeave={() => setIsFolderOpen(false)}
             className={`navbar ${isScrolled ? 'navbar--scrolled' : ''}`}
         >
@@ -111,6 +139,7 @@ function Navbar() {
                 <button
                     type="button"
                     onClick={() => setIsOpen(!isOpen)}
+                    ref={toggleRef}
                     className="navbar__toggle"
                     aria-label={isOpen ? 'Close menu' : 'Open menu'}
                     aria-expanded={isOpen}

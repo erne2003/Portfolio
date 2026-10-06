@@ -73,14 +73,16 @@
   --dur: 0.35s;
 
   --nav-h: 64px;
+  --safe-top: env(safe-area-inset-top, 0px);
 }
 
 /* ═══════════════════════════════════════════════
    Base
    ═══════════════════════════════════════════════ */
 html {
-  scroll-padding-top: calc(var(--nav-h) + 1rem);
+  scroll-padding-top: calc(var(--nav-h) + var(--safe-top) + 1rem);
   -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -92,7 +94,11 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-wrap: break-word;
 }
+
+/* Drop the double-tap-zoom delay on controls */
+a, button, [role="button"] { touch-action: manipulation; }
 
 h1, h2, h3 {
   font-family: var(--font-display);
@@ -145,7 +151,7 @@ html.lenis, html.lenis body { height: auto; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: var(--space-section) var(--gutter);
+  padding: var(--space-section) max(var(--gutter), env(safe-area-inset-right)) var(--space-section) max(var(--gutter), env(safe-area-inset-left));
 }
 
 .section-header {
@@ -202,11 +208,14 @@ html.lenis, html.lenis body { height: auto; }
               background-color var(--dur) var(--ease);
 }
 
-.glass-card:hover {
-  background: var(--bg-card-hover);
-  border-color: var(--border-strong);
-  box-shadow: var(--shadow-lift);
-  transform: translateY(-2px);
+/* Hover lift only where hover exists, so it doesn't stick after a tap */
+@media (hover: hover) {
+  .glass-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-lift);
+    transform: translateY(-2px);
+  }
 }
 
 .tech-chip {
@@ -250,6 +259,7 @@ html.lenis, html.lenis body { height: auto; }
               color var(--dur-fast) var(--ease);
 }
 .btn:hover { transform: translateY(-2px); }
+@media (hover: none) { .btn:hover { transform: none; } }
 .btn:active { transform: translateY(0); }
 
 .btn--primary {
@@ -303,6 +313,14 @@ html.lenis, html.lenis body { height: auto; }
 .nav-link:hover::after,
 .nav-link:focus-visible::after { width: 100%; left: 0; }
 
+/* Small screens: lift the 12-14px text steps so body copy stays readable */
+@media (max-width: 640px) {
+  :root {
+    --text-xs: 0.8125rem;
+    --text-sm: 0.9375rem;
+  }
+}
+
 /* ═══════════════════════════════════════════════
    Reduced motion
    ═══════════════════════════════════════════════ */
@@ -320,7 +338,7 @@ html.lenis, html.lenis body { height: auto; }
    Footer
    ═══════════════════════════════════════════════ */
 .site-footer {
-  padding: var(--space-6) var(--gutter);
+  padding: var(--space-6) max(var(--gutter), env(safe-area-inset-right)) max(var(--space-6), env(safe-area-inset-bottom)) max(var(--gutter), env(safe-area-inset-left));
   text-align: center;
   font-size: var(--text-sm);
   color: var(--text-muted);

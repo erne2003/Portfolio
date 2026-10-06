@@ -9,6 +9,7 @@
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 50;
+  padding-top: var(--safe-top);
   background: oklch(0.16 0.02 265 / 0.72);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   backdrop-filter: blur(14px) saturate(140%);
@@ -25,7 +26,7 @@
   max-width: 76rem;
   margin: 0 auto;
   height: var(--nav-h);
-  padding: 0 var(--gutter);
+  padding: 0 max(var(--gutter), env(safe-area-inset-right)) 0 max(var(--gutter), env(safe-area-inset-left));
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -89,8 +90,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   margin-right: -0.5rem;
   border: 0;
   border-radius: var(--radius-sm);
@@ -105,10 +106,19 @@
   background: var(--accent-dim);
 }
 
+@media (hover: none) {
+  .navbar__toggle:hover { color: var(--text-soft); background: transparent; }
+}
+
 /* Drawer */
 .navbar__drawer {
   margin: 0;
-  padding: var(--space-2) var(--gutter) var(--space-5);
+  padding: var(--space-2) max(var(--gutter), env(safe-area-inset-right)) max(var(--space-5), env(safe-area-inset-bottom)) max(var(--gutter), env(safe-area-inset-left));
+  /* Scroll inside the drawer when it's taller than the screen (landscape phones) */
+  max-height: calc(100vh - var(--nav-h) - var(--safe-top));
+  max-height: calc(100dvh - var(--nav-h) - var(--safe-top));
+  overflow-y: auto;
+  overscroll-behavior: contain;
   list-style: none;
   background: var(--bg-raised);
   border-top: 1px solid var(--border);
@@ -130,10 +140,18 @@
 
 .navbar__drawer li:last-child .navbar__drawer-link { border-bottom: 0; }
 
-.navbar__drawer-link:hover,
+.navbar__drawer-link:active { color: var(--accent); }
+
 .navbar__drawer-link:focus-visible {
   color: var(--accent);
   padding-left: var(--space-4);
+}
+
+@media (hover: hover) {
+  .navbar__drawer-link:hover {
+    color: var(--accent);
+    padding-left: var(--space-4);
+  }
 }
 
 @keyframes drawer-in {
