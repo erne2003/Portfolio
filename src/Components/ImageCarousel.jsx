@@ -10,7 +10,7 @@ import './ImageCarousel.css';
  * See Projects.jsx for how this is done.
  */
 
-function ImageCarousel({ images = [] }) {
+function ImageCarousel({ images = [], label = 'Project' }) {
     // ① State: which image index is currently shown
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -41,17 +41,17 @@ function ImageCarousel({ images = [] }) {
     };
 
     return (
-        <div className="carousel">
+        <div className="carousel" role="group" aria-roledescription="carousel" aria-label={`${label} screenshots`}>
             {/* ④ The sliding track — shifts left by (currentIndex × 100)% */}
             <div
                 className="carousel__track"
                 style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
                 {images.map((src, i) => (
-                    <div className="carousel__slide" key={i}>
+                    <div className="carousel__slide" key={i} aria-hidden={i !== currentIndex}>
                         <img
                             src={src}
-                            alt={`Slide ${i + 1}`}
+                            alt={`${label} screenshot ${i + 1} of ${images.length}`}
                             className="carousel__image"
                             draggable={false}
                         />
@@ -67,14 +67,14 @@ function ImageCarousel({ images = [] }) {
                         onClick={goToPrev}
                         aria-label="Previous image"
                     >
-                        ‹
+                        <span aria-hidden="true">‹</span>
                     </button>
                     <button
                         className="carousel__btn carousel__btn--right"
                         onClick={goToNext}
                         aria-label="Next image"
                     >
-                        ›
+                        <span aria-hidden="true">›</span>
                     </button>
 
                     {/* ⑥ Dot indicators — shows which image is active */}
@@ -85,6 +85,7 @@ function ImageCarousel({ images = [] }) {
                                 className={`carousel__dot ${i === currentIndex ? 'carousel__dot--active' : ''}`}
                                 onClick={(e) => goToIndex(e, i)}
                                 aria-label={`Go to slide ${i + 1}`}
+                                aria-current={i === currentIndex}
                             />
                         ))}
                     </div>
