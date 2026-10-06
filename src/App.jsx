@@ -1,5 +1,6 @@
 import { ReactLenis } from 'lenis/react';
-import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
+import 'lenis/dist/lenis.css';
+import { motion, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import Navbar from './Components/Navbar.jsx';
 import Hero from './Sections/Hero.jsx';
@@ -9,32 +10,24 @@ import Projects from './Sections/Projects.jsx';
 import Education from './Sections/Education.jsx';
 import TechStack from './Sections/TechStack.jsx';
 
-
-// Individual section tracker for precise entrance and exit transitions
+// Gentle scroll-linked entrance: fades/rises in as the section's top edge
+// travels from the bottom of the viewport to 70% of the way up. No exit
+// animation, so tall sections are never dimmed while being read.
 const SectionWrapper = ({ children, className = '' }) => {
   const containerRef = useRef(null);
+  const reduceMotion = useReducedMotion();
 
-  // Track this specific section's intersection with the viewport
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start end", "end start"]
+    offset: ['start end', 'start 0.7'],
   });
 
-  // Map scroll progress to subtle scale, opacity, and vertical movement
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.92, 1, 1, 0.95]);
-  const y = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [60, 0, 0, -60]);
-
-  // Blur: 6px when entering → 0 in view → 6px when exiting
-  const blurValue = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [3, 0, 0, 3]);
-  const filter = useTransform(blurValue, (v) => `blur(${v}px)`);
+  const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const y = useTransform(scrollYProgress, [0, 1], [32, 0]);
 
   return (
-    <div ref={containerRef} className={`section-wrapper ${className}`}>
-      <motion.div
-        style={{ opacity, scale, y, filter }}
-        className="w-full z-10"
-      >
+    <div ref={containerRef} className={className}>
+      <motion.div style={reduceMotion ? undefined : { opacity, y }} className="w-full">
         {children}
       </motion.div>
     </div>
@@ -42,52 +35,61 @@ const SectionWrapper = ({ children, className = '' }) => {
 };
 
 function App() {
-  // 1. Grab global scroll progress across the entire page body
   const { scrollYProgress } = useScroll();
+  const reduceMotion = useReducedMotion();
 
-  // 2. Wrap it in a spring damper so the progress line moves smoothly with Lenis momentum
-  const scaleX = useSpring(scrollYProgress, {
+  // Spring damper so the progress line follows Lenis momentum smoothly
+  const springX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
-    restDelta: 0.001
+    restDelta: 0.001,
   });
+  const scaleX = reduceMotion ? scrollYProgress : springX;
 
   return (
-    <ReactLenis root options={{ duration: .8, lerp: 0.25, smoothTouch: false }}>
-      <div className="bg-slate-950 text-slate-100 selection:bg-teal-500 selection:text-slate-900 overflow-x-hidden antialiased">
+    <ReactLenis
+      root
+      options={{ duration: 0.8, lerp: 0.25, smoothWheel: !reduceMotion, anchors: true }}
+    >
+      <div className="overflow-x-clip">
+        <a href="#main" className="skip-link">Skip to content</a>
         <Navbar />
 
-        <main className="relative z-10">
-          <SectionWrapper className="section-wrapper--hero">
+        <main id="main">
+          <SectionWrapper>
             <Hero id="hero" />
           </SectionWrapper>
 
-          <SectionWrapper className="section-wrapper--projects">
+          <SectionWrapper>
             <Projects id="projects" />
           </SectionWrapper>
 
-          <SectionWrapper className="section-wrapper--experience">
+          <SectionWrapper>
             <Experience id="experience" />
           </SectionWrapper>
 
-          <SectionWrapper className="section-wrapper--education">
+          <SectionWrapper>
             <Education id="education" />
           </SectionWrapper>
 
-          <SectionWrapper className="section-wrapper--about">
+          <SectionWrapper>
             <About id="about" />
           </SectionWrapper>
 
-          <SectionWrapper className="section-wrapper--techstack">
+          <SectionWrapper>
             <TechStack id="techstack" />
           </SectionWrapper>
-
         </main>
 
-        {/* 3. The Interactive Progress Indicator Bar matching your sample specs */}
+        <footer className="site-footer">
+          <p>&copy; {new Date().getFullYear()} Ernesto Cardoso</p>
+        </footer>
+
+        {/* Reading progress indicator */}
         <motion.div
+          aria-hidden="true"
           style={{ scaleX }}
-          className="fixed left-0 right-0 h-[5px] bg-teal-500 bottom-[15px] origin-left z-50 mix-blend-screen"
+          className="fixed left-0 right-0 top-0 h-[3px] origin-left z-[60] bg-[var(--accent)]"
         />
       </div>
     </ReactLenis>
