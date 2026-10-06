@@ -16,7 +16,8 @@ const educationData = [
         ],
         color: 'blue',
         icon: '🎓',
-        icon2: '🛡️'
+        icon2: '🛡️',
+        inProgress: true,
     },
     {
         degree: 'CompTIA Security+',
@@ -27,6 +28,18 @@ const educationData = [
         courses: ['General Security Concepts', 'Threats & Vulnerabilities', 'Security Architecture', 'Operations & Incident Response', 'Governance & Compliance'],
         color: 'red',
         icon: '🛡️',
+        inProgress: true,
+    },
+    {
+        degree: 'AWS Certified Solutions Architect – Associate',
+        school: 'Amazon Web Services',
+        date: 'In Progress (Expected 2026)',
+        description:
+            'Validates the ability to design secure, resilient, high-performing, and cost-optimized architectures on AWS using the Well-Architected Framework.',
+        courses: ['Secure Architectures', 'Resilient Architectures', 'High-Performing Architectures', 'Cost-Optimized Architectures'],
+        color: 'red',
+        icon: '☁️',
+        inProgress: true,
     },
     {
         degree: 'Bachelor of Science in Computer Science',
@@ -50,8 +63,37 @@ const educationData = [
     },
 ];
 
+function EducationCard({ item }) {
+    return (
+        <div className={`education__card glass-card education__card--${item.color}`}>
+            <div className="education__icons">
+                <div className={`education__icon education__icon--${item.color}`}>
+                    {item.icon}
+                </div>
+                {item.icon2 && (
+                    <div className={`education__icon education__icon--${item.color}`}>
+                        {item.icon2}
+                    </div>
+                )}
+            </div>
+            <div className="education__content">
+                <h3 className="education__degree">{item.degree}</h3>
+                <p className="education__school">{item.school}</p>
+                <span className="education__date">{item.date}</span>
+                <p className="education__desc">{item.description}</p>
+                <div className="education__courses">
+                    {item.courses.map((course) => (
+                        <span className="tech-chip" key={course}>{course}</span>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+}
+
 function Education({ id }) {
-    const [msDegree, secPlus, bsDegree, aaDegree] = educationData;
+    const inProgress = educationData.filter((item) => item.inProgress);
+    const completed = educationData.filter((item) => !item.inProgress);
 
     return (
         <section id={id} className="section education" aria-labelledby="education-title">
@@ -61,103 +103,22 @@ function Education({ id }) {
             </div>
 
             <div className="education__grid">
-                {/* Column 1: In Progress */}
                 <div className="education__column">
                     <h3 className="education__column-title">
                         <span aria-hidden="true">⏳</span> In Progress
                     </h3>
-
-                    {/* 1. Master of Science in Cybersecurity */}
-                    <div className={`education__card glass-card education__card--${msDegree.color}`}>
-                        <div className="education__icons">
-                            <div className={`education__icon education__icon--${msDegree.color}`}>
-                                {msDegree.icon}
-                            </div>
-                            {msDegree.icon2 && (
-                                <div className={`education__icon education__icon--${msDegree.color}`}>
-                                    {msDegree.icon2}
-                                </div>
-                            )}
-                        </div>
-                        <div className="education__content">
-                            <h3 className="education__degree">{msDegree.degree}</h3>
-                            <p className="education__school">{msDegree.school}</p>
-                            <span className="education__date">{msDegree.date}</span>
-                            <p className="education__desc">{msDegree.description}</p>
-                            <div className="education__courses">
-                                {msDegree.courses.map((course) => (
-                                    <span className="tech-chip" key={course}>{course}</span>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* 2. CompTIA Security+ */}
-                    <div className={`education__card glass-card education__card--${secPlus.color}`}>
-                        <div className="education__icons">
-                            <div className={`education__icon education__icon--${secPlus.color}`}>
-                                {secPlus.icon}
-                            </div>
-                        </div>
-                        <div className="education__content">
-                            <h3 className="education__degree">{secPlus.degree}</h3>
-                            <p className="education__school">{secPlus.school}</p>
-                            <span className="education__date">{secPlus.date}</span>
-                            <p className="education__desc">{secPlus.description}</p>
-                            <div className="education__courses">
-                                {secPlus.courses.map((course) => (
-                                    <span className="tech-chip" key={course}>{course}</span>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
+                    {inProgress.map((item) => (
+                        <EducationCard item={item} key={item.degree} />
+                    ))}
                 </div>
 
-                {/* Column 2: Completed */}
                 <div className="education__column">
                     <h3 className="education__column-title">
                         <span aria-hidden="true">✅</span> Completed
                     </h3>
-
-                    {/* 3. Bachelor of Science in Computer Science */}
-                    <div className={`education__card glass-card education__card--${bsDegree.color}`}>
-                        <div className="education__icons">
-                            <div className={`education__icon education__icon--${bsDegree.color}`}>
-                                {bsDegree.icon}
-                            </div>
-                        </div>
-                        <div className="education__content">
-                            <h3 className="education__degree">{bsDegree.degree}</h3>
-                            <p className="education__school">{bsDegree.school}</p>
-                            <span className="education__date">{bsDegree.date}</span>
-                            <p className="education__desc">{bsDegree.description}</p>
-                            <div className="education__courses">
-                                {bsDegree.courses.map((course) => (
-                                    <span className="tech-chip" key={course}>{course}</span>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* 4. Associate of Arts in Computer Science */}
-                    <div className={`education__card glass-card education__card--${aaDegree.color}`}>
-                        <div className="education__icons">
-                            <div className={`education__icon education__icon--${aaDegree.color}`}>
-                                {aaDegree.icon}
-                            </div>
-                        </div>
-                        <div className="education__content">
-                            <h3 className="education__degree">{aaDegree.degree}</h3>
-                            <p className="education__school">{aaDegree.school}</p>
-                            <span className="education__date">{aaDegree.date}</span>
-                            <p className="education__desc">{aaDegree.description}</p>
-                            <div className="education__courses">
-                                {aaDegree.courses.map((course) => (
-                                    <span className="tech-chip" key={course}>{course}</span>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
+                    {completed.map((item) => (
+                        <EducationCard item={item} key={item.degree} />
+                    ))}
                 </div>
             </div>
         </section>

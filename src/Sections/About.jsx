@@ -8,12 +8,12 @@ const stats = [
 ];
 
 const interests = [
-    '💹 Fintech',
+    '🧩 SaaS Platforms',
+    '🗄️ Databases',
+    '🔑 Auth & Access Control',
+    '⚙️ CI/CD & DevSecOps',
     '☁️ Cloud Architecture',
-    '🏋️‍♂️Fitness & Recovery',
-    '🔐 Security',
     '⚡ Performance',
-    '🎨 UI/UX Design',
 ];
 
 function About({ id }) {
@@ -28,20 +28,28 @@ function About({ id }) {
                 {/* Bio column */}
                 <div className="about__bio glass-card">
                     <h3 className="about__bio-title">
-                        Crafting digital experiences with precision
+                        Building the secure foundations SaaS runs on
                     </h3>
                     <p className="about__bio-text">
-                        I'm a software engineer with a passion for building products that
-                        sit at the <span className="about__bio-highlight">intersection of
-                            finance and technology</span>. I thrive in environments where clean
-                        code meets real-world impact.
+                        I'm a software engineer focused on the parts of a product users
+                        never see: <span className="about__bio-highlight">databases,
+                            authentication, and delivery pipelines</span>. I care about
+                        systems that stay correct, fast, and secure as they grow.
                     </p>
                     <p className="about__bio-text">
-                        From architecting scalable APIs to designing pixel-perfect
-                        interfaces, I enjoy the full spectrum of product development.
-                        Currently exploring <span className="about__bio-highlight">cloud-native
-                            architectures</span> and <span className="about__bio-highlight">real-time
-                                data systems</span>.
+                        Most recently I built <span className="about__bio-highlight">Virtus
+                            Metrics</span>, a full-stack SaaS on Next.js and PostgreSQL with
+                        hand-rolled JWT auth that enforces ownership checks in every query,
+                        shipped through a GitHub Actions DevSecOps pipeline with a
+                        zero-vulnerability supply chain. I also contributed to
+                        the open-source database platform <span className="about__bio-highlight">Baserow</span>,
+                        fixing a data-integrity bug in its Django and PostgreSQL backend.
+                    </p>
+                    <p className="about__bio-text">
+                        Now I'm pursuing an MS in Cybersecurity and the AWS Solutions
+                        Architect – Associate certification, taking that work into
+                        {' '}<span className="about__bio-highlight">cloud architecture</span> and
+                        {' '}<span className="about__bio-highlight">secure-by-default infrastructure</span>.
                     </p>
 
                     <div className="about__interests">
