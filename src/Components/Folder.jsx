@@ -20,7 +20,7 @@ const darkenColor = (hex, percent) => {
 };
 
 const Folder = ({
-  color = '#00a8ff',
+  color = '#3dc9d6',
   size = 1,
   items = [],
   isScrolled = false,
@@ -86,6 +86,7 @@ const Folder = ({
         className={folderClassName}
         style={folderStyle}
         onMouseEnter={handleMouseEnter}
+        onFocus={(e) => e.target.matches(':focus-visible') && handleMouseEnter()}
         onClick={handleClick}
         onKeyDown={e => {
           if (e.key === 'Enter' || e.key === ' ') {
@@ -108,10 +109,12 @@ const Folder = ({
             const leftOffset = (items.length - i) * 150 + 75;
 
             return (
-              <div
+              <a
                 key={i}
+                href={href || undefined}
+                tabIndex={open ? 0 : -1}
                 className={`paper paper-${i + 1}`}
-                onClick={(e) => handleItemClick(e, href)}
+                onClick={(e) => { e.preventDefault(); handleItemClick(e, href); }}
                 style={{
                   opacity: open ? 1 : 0,
                   pointerEvents: open ? 'auto' : 'none',
@@ -122,7 +125,7 @@ const Folder = ({
                 }}
               >
                 {label}
-              </div>
+              </a>
             );
           })}
           <div className="folder__front"></div>

@@ -201,7 +201,13 @@ function DecryptedText({
 
   // Initialize display with encrypted characters (for hover/click modes)
   useEffect(() => {
-    if (animateOn === 'view') {
+    const reduceMotion = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (animateOn === 'view' && reduceMotion) {
+      // Respect reduced motion: show the real text, no scramble
+      setDisplay(letters.map((l) => l));
+      setRevealed(letters.map(() => true));
+      setHasAnimated(true);
+    } else if (animateOn === 'view') {
       // Start scrambled for "view" mode
       setDisplay(letters.map((l) => (l === ' ' ? ' ' : randomChar())));
     } else {

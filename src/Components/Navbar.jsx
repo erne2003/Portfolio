@@ -1,11 +1,38 @@
 import { useState, useEffect } from 'react';
+import './Navbar.css';
 import DecryptedText from './DecryptedText';
 import Folder from './Folder';
+
+const navLinks = [
+    { name: 'Home', href: '#hero' },
+    { name: 'Experience', href: '#experience' },
+    { name: 'About me', href: '#about' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'Education', href: '#education' },
+    { name: 'Skills', href: '#techstack' },
+];
+
+// The folder menu fans its links out to the left, so it needs a wide viewport.
+const FOLDER_QUERY = '(min-width: 1280px)';
+
+function useMediaQuery(query) {
+    const [matches, setMatches] = useState(() => window.matchMedia(query).matches);
+
+    useEffect(() => {
+        const mql = window.matchMedia(query);
+        const onChange = (e) => setMatches(e.matches);
+        mql.addEventListener('change', onChange);
+        return () => mql.removeEventListener('change', onChange);
+    }, [query]);
+
+    return matches;
+}
 
 function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [isFolderOpen, setIsFolderOpen] = useState(false);
+    const canUseFolder = useMediaQuery(FOLDER_QUERY);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -17,38 +44,28 @@ function Navbar() {
             }
         };
 
+        handleScroll();
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const handleMouseLeaveNav = () => {
-        setIsFolderOpen(false);
-    };
+    // Close the mobile drawer with Escape
+    useEffect(() => {
+        if (!isOpen) return;
+        const onKey = (e) => e.key === 'Escape' && setIsOpen(false);
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+    }, [isOpen]);
 
-    const navLinks = [
-        { name: 'Home', href: '#hero' },
-        { name: 'Experience', href: '#experience' },
-        { name: 'About me', href: '#about' },
-        { name: 'Projects', href: '#projects' },
-        { name: 'Education', href: '#education' },
-        { name: 'Skills', href: '#techstack' },
-    ];
+    const collapsed = isScrolled && canUseFolder;
 
     return (
-        <nav
-            onMouseLeave={handleMouseLeaveNav}
-            className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-                isScrolled
-                    ? 'bg-slate-900/90 backdrop-blur-lg border-b border-slate-800/80 py-1 shadow-xl'
-                    : 'bg-slate-900/80 backdrop-blur-md border-b border-slate-800 py-0'
-            } text-slate-200`}
+        <header
+            onMouseLeave={() => setIsFolderOpen(false)}
+            className={`navbar ${isScrolled ? 'navbar--scrolled' : ''}`}
         >
-            <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-                {/* Logo / Name */}
-                <a
-                    href="#hero"
-                    className="mr-auto text-xl font-bold tracking-tight text-teal-400 hover:text-teal-300 transition-colors"
-                >
+            <nav className="navbar__inner" aria-label="Primary">
+                <a href="#hero" className="navbar__brand" aria-label="Ernesto Cardoso, back to top">
                     <DecryptedText
                         text="Ernesto Cardoso"
                         animateOn="view"
@@ -60,80 +77,72 @@ function Navbar() {
                     />
                 </a>
 
-                {/* Right side container holding Desktop Nav Links & Folder */}
-                <div className="hidden md:flex items-center relative min-h-[48px] justify-end">
-                    {/* Desktop Navigation Links — slides right into folder when scrolled */}
-                    <div
-                        className={`flex items-center space-x-8 transition-all duration-700 ease-in-out ${
-                            isScrolled
-                                ? 'translate-x-[160px] scale-0 opacity-0 pointer-events-none'
-                                : 'translate-x-0 scale-100 opacity-100'
-                        }`}
+                {/* Desktop: links, which slide into the folder on scroll (wide screens only) */}
+                <div className="navbar__desktop">
+                    <ul
+                        className={`navbar__links ${collapsed ? 'navbar__links--hidden' : ''}`}
+                        aria-hidden={collapsed}
+                        inert={collapsed}
                     >
                         {navLinks.map((link) => (
-                            <a
-                                key={link.name}
-                                href={link.href}
-                                className="nav-link"
-                            >
-                                {link.name}
-                            </a>
+                            <li key={link.name}>
+                                <a href={link.href} className="nav-link">{link.name}</a>
+                            </li>
                         ))}
-                    </div>
+                    </ul>
 
-                    {/* Folder Menu — appears on scroll and receives the sliding options */}
-                    <div
-                        className={`transition-all duration-700 ease-in-out ${
-                            isScrolled
-                                ? 'opacity-100 scale-90 translate-x-0'
-                                : 'opacity-0 scale-0 translate-x-8 pointer-events-none absolute right-0'
-                        }`}
-                    >
-                        <Folder
-                            color="#00a8ff"
-                            size={0.55}
-                            items={navLinks}
-                            isScrolled={isScrolled}
-                            isOpen={isFolderOpen}
-                            onOpen={() => setIsFolderOpen(true)}
-                            onToggle={() => setIsFolderOpen((prev) => !prev)}
-                            onClose={() => setIsFolderOpen(false)}
-                        />
-                    </div>
+                    {canUseFolder && (
+                        <div className={`navbar__folder ${collapsed ? 'navbar__folder--visible' : ''}`}>
+                            <Folder
+                                color="#3dc9d6"
+                                size={0.55}
+                                items={navLinks}
+                                isScrolled={collapsed}
+                                isOpen={isFolderOpen}
+                                onOpen={() => setIsFolderOpen(true)}
+                                onToggle={() => setIsFolderOpen((prev) => !prev)}
+                                onClose={() => setIsFolderOpen(false)}
+                            />
+                        </div>
+                    )}
                 </div>
 
-                {/* Mobile Menu Button */}
+                {/* Mobile / tablet menu button */}
                 <button
+                    type="button"
                     onClick={() => setIsOpen(!isOpen)}
-                    className="md:hidden p-2 text-slate-400 hover:text-slate-100 focus:outline-none"
-                    aria-label="Toggle Menu"
+                    className="navbar__toggle"
+                    aria-label={isOpen ? 'Close menu' : 'Open menu'}
+                    aria-expanded={isOpen}
+                    aria-controls="mobile-menu"
                 >
-                    <svg className="h-6 w-6 fill-current" viewBox="0 0 24 24">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
                         {isOpen ? (
-                            <path fillRule="evenodd" clipRule="evenodd" d="M18.278 16.864a1 1 0 01-1.414 1.414l-4.829-4.83-4.828 4.83a1 1 0 01-1.414-1.414l4.829-4.83-4.829-4.83a1 1 0 011.414-1.414l4.828 4.83 4.829-4.83a1 1 0 011.414 1.414l-4.83 4.83 4.83 4.83z" />
+                            <path d="M6 6l12 12M18 6L6 18" />
                         ) : (
-                            <path fillRule="evenodd" d="M4 5h16a1 1 0 010 2H4a1 1 0 110-2zm0 6h16a1 1 0 010 2H4a1 1 0 010-2zm0 6h16a1 1 0 010 2H4a1 1 0 010-2z" />
+                            <path d="M4 7h16M4 12h16M4 17h16" />
                         )}
                     </svg>
                 </button>
-            </div>
+            </nav>
 
-            {/* Mobile Drawer Menu */}
+            {/* Mobile drawer */}
             {isOpen && (
-                <div className="md:hidden bg-slate-900 border-b border-slate-800 px-6 pt-2 pb-6 flex flex-col space-y-4">
+                <ul id="mobile-menu" className="navbar__drawer">
                     {navLinks.map((link) => (
-                        <a
-                            key={link.name}
-                            href={link.href}
-                            onClick={() => setIsOpen(false)} // Close menu on click
-                            className="block text-base font-medium hover:text-teal-400 transition-colors"
-                        >
-                            {link.name}
-                        </a>
+                        <li key={link.name}>
+                            <a
+                                href={link.href}
+                                onClick={() => setIsOpen(false)}
+                                className="navbar__drawer-link"
+                            >
+                                {link.name}
+                            </a>
+                        </li>
                     ))}
-                </div>
+                </ul>
             )}
-        </nav>
+        </header>
     );
 }
 
