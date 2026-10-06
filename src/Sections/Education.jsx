@@ -54,17 +54,17 @@ function Education({ id }) {
     const [msDegree, secPlus, bsDegree, aaDegree] = educationData;
 
     return (
-        <section id={id} className="education">
-            <div className="education__header">
+        <section id={id} className="section education" aria-labelledby="education-title">
+            <div className="section-header">
                 <span className="section-label">Background</span>
-                <h2 className="section-title">Education</h2>
+                <h2 id="education-title" className="section-title">Education</h2>
             </div>
 
             <div className="education__grid">
                 {/* Column 1: In Progress */}
                 <div className="education__column">
                     <h3 className="education__column-title">
-                        <span>⏳</span> In Progress
+                        <span aria-hidden="true">⏳</span> In Progress
                     </h3>
 
                     {/* 1. Master of Science in Cybersecurity */}
@@ -116,7 +116,7 @@ function Education({ id }) {
                 {/* Column 2: Completed */}
                 <div className="education__column">
                     <h3 className="education__column-title">
-                        <span>✅</span> Completed
+                        <span aria-hidden="true">✅</span> Completed
                     </h3>
 
                     {/* 3. Bachelor of Science in Computer Science */}

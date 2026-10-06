@@ -18,10 +18,10 @@ const interests = [
 
 function About({ id }) {
     return (
-        <section id={id} className="about">
-            <div className="about__header">
+        <section id={id} className="section about" aria-labelledby="about-title">
+            <div className="section-header">
                 <span className="section-label">Get to know me</span>
-                <h2 className="section-title">About Me</h2>
+                <h2 id="about-title" className="section-title">About Me</h2>
             </div>
 
             <div className="about__grid">

@@ -44,11 +44,11 @@ const categories = [
 
 function TechStack({ id }) {
     return (
-        <section id={id} className="techstack">
-            <div className="techstack__header">
+        <section id={id} className="section techstack" aria-labelledby="skills-title">
+            <div className="section-header">
                 <span className="section-label">What I work with</span>
-                <h2 className="section-title">Skills &amp; Technologies</h2>
-                <p className="section-subtitle" style={{ margin: '1rem auto 0' }}>
+                <h2 id="skills-title" className="section-title">Skills &amp; Technologies</h2>
+                <p className="section-subtitle">
                     A curated set of technologies I use to bring ideas to life — from
                     concept to production.
                 </p>
@@ -56,20 +56,20 @@ function TechStack({ id }) {
 
             <div className="techstack__categories">
                 {categories.map((cat) => (
-                    <div className="techstack__category" key={cat.name}>
+                    <section className="techstack__category" key={cat.name} aria-label={cat.name}>
                         <div className="techstack__category-header">
-                            <div className={`techstack__category-icon techstack__category-icon--${cat.color}`}>
+                            <div className={`techstack__category-icon techstack__category-icon--${cat.color}`} aria-hidden="true">
                                 {cat.icon}
                             </div>
-                            <span className="techstack__category-name">{cat.name}</span>
+                            <h3 className="techstack__category-name">{cat.name}</h3>
                         </div>
 
                         <div className="techstack__grid">
                             {cat.skills.map((skill) => (
                                 <div className="techstack__skill glass-card" key={skill.name}>
-                                    <span className="techstack__skill-icon">{skill.icon}</span>
+                                    <span className="techstack__skill-icon" aria-hidden="true">{skill.icon}</span>
                                     <span className="techstack__skill-name">{skill.name}</span>
-                                    <div className="techstack__skill-bar">
+                                    <div className="techstack__skill-bar" aria-hidden="true">
                                         <div
                                             className={`techstack__skill-bar-fill techstack__skill-bar-fill--${cat.color}`}
                                             style={{ width: `${skill.level}%` }}
@@ -78,7 +78,7 @@ function TechStack({ id }) {
                                 </div>
                             ))}
                         </div>
-                    </div>
+                    </section>
                 ))}
             </div>
         </section>

@@ -41,7 +41,7 @@ const pastExperiences = [
 
 function ExperienceCard({ exp }) {
     return (
-        <div className="experience__card glass-card glass-card--blue">
+        <article className="experience__card glass-card">
             <span className="experience__date">{exp.date}</span>
             <h3 className="experience__role">{exp.role}</h3>
             <p className="experience__company">{exp.company}</p>
@@ -55,20 +55,20 @@ function ExperienceCard({ exp }) {
                     <span className="tech-chip" key={tag}>{tag}</span>
                 ))}
             </div>
-        </div>
+        </article>
     );
 }
 
 
 function Experience({ id }) {
     return (
-        <section id={id} className="experience">
+        <section id={id} className="section experience" aria-labelledby="current-title past-title">
             <div className="experience__columns">
                 {/* Current Work Column */}
                 <div className="experience__section">
-                    <div className="experience__header">
+                    <div className="section-header section-header--left">
                         <span className="section-label">Present</span>
-                        <h2 className="section-title">Current Work</h2>
+                        <h2 id="current-title" className="section-title">Current Work</h2>
                     </div>
                     <div className="experience__grid">
                         {currentWork.map((exp, i) => (
@@ -79,14 +79,14 @@ function Experience({ id }) {
 
                 {/* Past Experience Column */}
                 <div className="experience__section">
-                    <div className="experience__header experience__header--shifted">
+                    <div className="section-header section-header--left experience__header--shifted">
                         <span className="section-label">Career</span>
-                        <h2 className="section-title">Past Experience</h2>
+                        <h2 id="past-title" className="section-title">Past Experience</h2>
                     </div>
                     <div className="experience__timeline">
                         {pastExperiences.map((exp, i) => (
                             <div className="experience__entry" key={i}>
-                                <div className="experience__dot" />
+                                <div className="experience__dot" aria-hidden="true" />
                                 <ExperienceCard exp={exp} />
                             </div>
                         ))}
